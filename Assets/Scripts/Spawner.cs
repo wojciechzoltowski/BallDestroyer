@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
         SpawnBall();
     }
 
-    public void SpawnBall()
+    void SpawnBall()
     {
         float xPosition = Random.Range(0 - xRange, 0 + xRange);
         float zPosition = Random.Range(0 - zRange, 0 + zRange);
@@ -30,7 +30,8 @@ public class Spawner : MonoBehaviour
 
         if (counter <= 0)
         {
-            Instantiate(prefab, spawnPosition, Quaternion.identity);
+            GameObject newBall = Instantiate(prefab, spawnPosition, Quaternion.identity);
+            newBall.GetComponent<Renderer>().material.color = Random.ColorHSV();
             counter = timer;
         }
     }
