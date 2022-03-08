@@ -7,25 +7,26 @@ public class Score : MonoBehaviour
 {
     public TMP_Text amountText;
     public VerticalLayoutGroup ballsList;
-    public TMP_Text listElementPrefab;
-    private GameObject[] balls;
+    public TMP_Text listItemPrefab;
+    private List<Ball> balls;
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        balls = GameObject.FindGameObjectsWithTag("Ball");
-        amountText.text = "Balls to destroy: " + balls.Length.ToString();
+        balls = BallManager.Instance.allBallsList;
+        amountText.text = $"Balls to destroy: {balls.Count}";
         UpdateListOfBalls();
     }
 
     private void UpdateListOfBalls()
     {
-        ballsList.transform.DetachChildren();
-        foreach (GameObject ball in balls)
+        foreach (Transform ball in ballsList.transform)
         {
-            TMP_Text newListElement = Instantiate(listElementPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            newListElement.color = ball.GetComponent<Renderer>().material.color;
-            newListElement.transform.SetParent(ballsList.transform);
+            Destroy(ball.gameObject);
+        }
+
+        foreach (Ball ball in balls)
+        {
+            BallListItemPresenter.InstantiateListItem(ball, ballsList, listItemPrefab);
         }
     }
 }

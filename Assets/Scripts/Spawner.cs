@@ -1,38 +1,32 @@
+using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject prefab;
-    public float timer = 0.5f;
+    public GameObject ballPrefab;
     private float counter;
-    private float xRange = 9f;
-    private float zRange = 9f;
+    private const float XRange = 9f;
+    private const float ZRange = 9f;
+    private List<Ball> allBalls;
+    private List<Ball> spawnedBalls = new List<Ball>();
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        counter = timer;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        SpawnBall();
-    }
-
-    void SpawnBall()
-    {
-        float xPosition = Random.Range(0 - xRange, 0 + xRange);
-        float zPosition = Random.Range(0 - zRange, 0 + zRange);
-        Vector3 spawnPosition = new Vector3(xPosition, 12f, zPosition);
-
-        counter -= Time.deltaTime;
-
-        if (counter <= 0)
+        allBalls = BallManager.Instance.allBallsList;
+        List<Ball> ballsToSpawn = allBalls.Except(spawnedBalls).ToList();
+        if (ballsToSpawn.Count != 0)
         {
-            GameObject newBall = Instantiate(prefab, spawnPosition, Quaternion.identity);
-            newBall.GetComponent<Renderer>().material.color = Random.ColorHSV();
-            counter = timer;
+            SpawnBall(ballsToSpawn);
+        }
+    }
+
+    private void SpawnBall(List<Ball> ballsToSpawn)
+    {
+        foreach (Ball ball in ballsToSpawn)
+        {
+            BallPresenter.InstantiateBall(ball, ballPrefab);
+            spawnedBalls.Add(ball);
         }
     }
 }
