@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject ballPrefab;
+    [SerializeField] private GameObject ballPrefab;
     private float counter;
     private const float XRange = 9f;
     private const float ZRange = 9f;

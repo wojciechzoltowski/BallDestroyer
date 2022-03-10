@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    public TMP_Text amountText;
-    public VerticalLayoutGroup ballsList;
-    public TMP_Text listItemPrefab;
+    [SerializeField] private TMP_Text amountText;
+    [SerializeField] private VerticalLayoutGroup ballsList;
+    [SerializeField] private TMP_Text listItemPrefab;
     private List<Ball> balls;
 
     private void FixedUpdate()

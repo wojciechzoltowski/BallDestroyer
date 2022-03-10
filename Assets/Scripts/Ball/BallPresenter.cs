@@ -4,6 +4,7 @@ public class BallPresenter : MonoBehaviour
 {
     private const float XRange = 9f;
     private const float ZRange = 9f;
+
     public static void InstantiateBall(Ball ball, GameObject ballPrefab)
     {
         float xPosition = Random.Range(0 - XRange, 0 + XRange);
