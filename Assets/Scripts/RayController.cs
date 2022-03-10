@@ -11,7 +11,8 @@ public class RayController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                BallManager.DestroyBall(hit);
+                GameObject ball = hit.transform.gameObject;
+                BallManager.Instance.DestroyBall(ball);
             }
         }
     }

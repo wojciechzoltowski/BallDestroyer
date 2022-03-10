@@ -5,16 +5,13 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject ballPrefab;
-    private float counter;
-    private const float XRange = 9f;
-    private const float ZRange = 9f;
-    private List<Ball> allBalls;
-    private List<Ball> spawnedBalls = new List<Ball>();
+    private List<Ball> _allBalls;
+    private readonly List<Ball> _spawnedBalls = new List<Ball>();
 
     private void Update()
     {
-        allBalls = BallManager.Instance.allBallsList;
-        List<Ball> ballsToSpawn = allBalls.Except(spawnedBalls).ToList();
+        _allBalls = BallManager.Instance.AllBallsList;
+        List<Ball> ballsToSpawn = _allBalls.Except(_spawnedBalls).ToList();
         if (ballsToSpawn.Count != 0)
         {
             SpawnBall(ballsToSpawn);
@@ -25,8 +22,8 @@ public class Spawner : MonoBehaviour
     {
         foreach (Ball ball in ballsToSpawn)
         {
-            BallPresenter.InstantiateBall(ball, ballPrefab);
-            spawnedBalls.Add(ball);
+            BallFactory.InstantiateBall(ball, ballPrefab);
+            _spawnedBalls.Add(ball);
         }
     }
 }

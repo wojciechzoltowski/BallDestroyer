@@ -5,28 +5,28 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    [SerializeField] private TMP_Text amountText;
-    [SerializeField] private VerticalLayoutGroup ballsList;
-    [SerializeField] private TMP_Text listItemPrefab;
-    private List<Ball> balls;
+    [SerializeField] private TMP_Text _amountText;
+    [SerializeField] private VerticalLayoutGroup _ballsList;
+    [SerializeField] private TMP_Text _listItemPrefab;
+    private List<Ball> _balls;
 
     private void FixedUpdate()
     {
-        balls = BallManager.Instance.allBallsList;
-        amountText.text = $"Balls to destroy: {balls.Count}";
+        _balls = BallManager.Instance.AllBallsList;
+        _amountText.text = $"Balls to destroy: {_balls.Count}";
         UpdateListOfBalls();
     }
 
     private void UpdateListOfBalls()
     {
-        foreach (Transform ball in ballsList.transform)
+        foreach (Transform ball in _ballsList.transform)
         {
             Destroy(ball.gameObject);
         }
 
-        foreach (Ball ball in balls)
+        foreach (Ball ball in _balls)
         {
-            BallListItemPresenter.InstantiateListItem(ball, ballsList, listItemPrefab);
+            BallListItemFactory.InstantiateListItem(ball, _ballsList, _listItemPrefab);
         }
     }
 }

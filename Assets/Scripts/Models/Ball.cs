@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class Ball
 {
-    public Color color { get; set; }
+    public Color Color { get; set; }
 }

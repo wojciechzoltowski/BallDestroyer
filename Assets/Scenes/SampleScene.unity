@@ -781,9 +781,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1477eeaa5703ba645a968094b625ce78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountText: {fileID: 1436377817}
-  ballsList: {fileID: 1727192505}
-  listItemPrefab: {fileID: 3274852844580519755, guid: aeab16f9507cf7a409d3e5192f91815c, type: 3}
+  _amountText: {fileID: 1436377817}
+  _ballsList: {fileID: 1727192505}
+  _listItemPrefab: {fileID: 3274852844580519755, guid: aeab16f9507cf7a409d3e5192f91815c, type: 3}
 --- !u!1 &1250455214
 GameObject:
   m_ObjectHideFlags: 0

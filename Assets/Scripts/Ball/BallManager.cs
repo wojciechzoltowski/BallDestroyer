@@ -7,40 +7,43 @@ public sealed class BallManager : MonoBehaviour
     [SerializeField] private double _ballSpawnInterval = 0.5;
 
     private double _counter;
-    public List<Ball> allBallsList { get; set; }
+    public List<Ball> AllBallsList { get; set; }
 
     public static BallManager Instance { get; private set; }
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance != null)
         {
-            Destroy(this);
+            Debug.LogError($"Multiple instances of {nameof(BallManager)} detected");
         }
         else
         {
             Instance = this;
         }
 
-        allBallsList = new List<Ball>();
+        AllBallsList = new List<Ball>();
+    }
+
+    private void Start()
+    {
         _counter = _ballSpawnInterval;
     }
 
     private void Update()
     {
+        _counter -= Time.deltaTime;
         if (CanSpawn())
         {
             AddBall();
+            _counter = _ballSpawnInterval;
         }
     }
 
     private bool CanSpawn()
     {
-        _counter -= Time.deltaTime;
-
         if (_counter <= 0)
         {
-            _counter = _ballSpawnInterval;
             return true;
         }
 
@@ -49,16 +52,14 @@ public sealed class BallManager : MonoBehaviour
 
     private void AddBall()
     {
-        Color color = Random.ColorHSV();
-        Ball newBall = new Ball { color = color };
-        allBallsList.Add(newBall);
+        Ball newBall = new Ball { Color = Random.ColorHSV() };
+        AllBallsList.Add(newBall);
     }
 
-    public static void DestroyBall(RaycastHit hit)
+    public void DestroyBall(GameObject ball)
     {
-        GameObject hitBall = hit.transform.gameObject;
-        Destroy(hitBall);
-        Color colorOfBallToRemove = hitBall.GetComponent<Renderer>().material.color;
-        Instance.allBallsList.Remove(Instance.allBallsList.FirstOrDefault(b => b.color == colorOfBallToRemove));
+        Destroy(ball);
+        Color colorOfBallToRemove = ball.GetComponent<Renderer>().material.color;
+        Instance.AllBallsList.Remove(Instance.AllBallsList.FirstOrDefault(b => b.Color == colorOfBallToRemove));
     }
 }
