@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public sealed class BallManager : MonoBehaviour
@@ -51,5 +52,13 @@ public sealed class BallManager : MonoBehaviour
         Color color = Random.ColorHSV();
         Ball newBall = new Ball { color = color };
         allBallsList.Add(newBall);
+    }
+
+    public static void DestroyBall(RaycastHit hit)
+    {
+        GameObject hitBall = hit.transform.gameObject;
+        Destroy(hitBall);
+        Color colorOfBallToRemove = hitBall.GetComponent<Renderer>().material.color;
+        Instance.allBallsList.Remove(Instance.allBallsList.FirstOrDefault(b => b.color == colorOfBallToRemove));
     }
 }
